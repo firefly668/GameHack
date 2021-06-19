@@ -1,7 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 public class NPC : MonoBehaviour
 {
     public Player player;
@@ -18,6 +17,14 @@ public class NPC : MonoBehaviour
     {
         
     }
+
+    public void moveToPlayer()
+    {
+        Vector3 target = player.transform.position;
+        Vector3 pointAt = target - transform.position;
+        transform.Translate(pointAt);
+    }
+
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if(collision.gameObject.tag == "Player")
