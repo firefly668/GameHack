@@ -1,7 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.UI;
+using DG.Tweening;
 public class Player : MonoBehaviour
 {
     //地图左侧墙壁 因觉得要用左侧进场 所以先不激活左侧墙壁
@@ -20,6 +21,11 @@ public class Player : MonoBehaviour
     public bool isStartGameAni = true;
 
     AnimatorStateInfo ani;
+    public Image thinkBubble;
+    public Text thinkText;
+    public string thinkstr;
+    private float targetAlpha;
+    private float currentAlpha;
     // Start is called before the first frame update
     void Start()
     {
@@ -29,6 +35,9 @@ public class Player : MonoBehaviour
         PlayNewGame();
         //Debug.Log(isStartGameAni);
         leftWall.SetActive(false);
+        targetAlpha = 0;
+        currentAlpha = 0;
+        thinkBubble.color = new Color(255, 255, 255, 0);
     }
 
     // Update is called once per frame
@@ -75,6 +84,40 @@ public class Player : MonoBehaviour
             leftWall.SetActive(true);
         }
         //Debug.Log(isStartGameAni + "   " + moveable + "   " + talkable);
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            BeginThink("111");
+        }
+        if (Input.GetKeyDown(KeyCode.Q))
+        {
+            EndThink();
+        }
+        if (targetAlpha != currentAlpha)
+        {
+            Debug.Log(currentAlpha);
+            thinkBubble.gameObject.SetActive(true);
+            if (Mathf.Abs(targetAlpha - currentAlpha) > 0.1)
+                currentAlpha += (targetAlpha - currentAlpha) * Time.deltaTime * 2;
+            else currentAlpha = targetAlpha;
+            
+            thinkBubble.color = new Color(255, 255, 255, currentAlpha);
+        }
+        else
+        {
+            if (currentAlpha == 0)
+            {
+                if(thinkBubble.IsActive())
+                    thinkBubble.gameObject.SetActive(false);
+            }
+            else
+            {
+                if (!thinkText.IsActive())
+                {
+                    thinkText.gameObject.SetActive(true);
+                    thinkText.DOText(thinkstr, 0.8f, false);
+                }
+            }
+        }
     }
     public void BeginTalk()
     {
@@ -96,4 +139,16 @@ public class Player : MonoBehaviour
        
     }
 
+    public void BeginThink(string str)
+    {
+        thinkstr = str;
+        targetAlpha = 1;
+        thinkText.text = "";
+    }
+
+    public void EndThink()
+    {
+        thinkText.gameObject.SetActive(false);
+        targetAlpha = 0;
+    }
 }
