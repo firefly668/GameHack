@@ -158,6 +158,7 @@ public class Player : MonoBehaviour
         //isStartGameAni = false;
         transform.Translate(Vector3.left * 5);
         Invoke("InvokePlayGame", 1f);
+        SoundManager.instance.mic[0].Play();
     }
     public void InvokePlayGame()
     {

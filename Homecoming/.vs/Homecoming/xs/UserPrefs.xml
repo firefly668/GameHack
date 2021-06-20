@@ -1,18 +1,25 @@
 ﻿<Properties StartupConfiguration="{FD6F1703-4335-53EF-A8FD-BCE409E8985C}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/NPC.cs">
     <Files>
       <File FileName="Assets/Scripts/Message.cs" Line="10" Column="31" />
-      <File FileName="Assets/Scripts/Player.cs" Line="31" Column="53" />
+      <File FileName="Assets/Scripts/Player.cs" Line="161" Column="42" />
       <File FileName="Assets/Scripts/PostManager.cs" />
       <File FileName="Assets/Scripts/StartGame.cs" />
-      <File FileName="Assets/Scripts/TalkManager.cs" />
+      <File FileName="Assets/Scripts/TalkManager.cs" Line="41" Column="17" />
+      <File FileName="Assets/Scripts/GameManager.cs" Line="39" Column="46" />
+      <File FileName="Assets/Scripts/SoundManager.cs" Line="9" Column="29" />
+      <File FileName="Assets/Scripts/Bgroll.cs" Line="23" Column="17" />
+      <File FileName="Assets/Scripts/End.cs" Line="27" Column="51" />
+      <File FileName="Assets/Scripts/NPC.cs" Line="135" Column="36" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Homecoming" expanded="True">
-            <Node name="Assets" expanded="True" selected="True">
-              <Node name="Scripts" expanded="True" />
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="NPC.cs" selected="True" />
+              </Node>
             </Node>
           </Node>
         </State>

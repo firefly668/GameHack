@@ -136,5 +136,6 @@ public class NPC : MonoBehaviour
     public void EndGameTalk()
     {
         TalkManager.instance.Change(false,endTalk);
+        SoundManager.instance.mic[6].Play();
     }
 }

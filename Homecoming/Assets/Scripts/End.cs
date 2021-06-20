@@ -20,6 +20,12 @@ public class End : MonoBehaviour
         summary.color = new Color(255, 255, 255, 0);
         summary.gameObject.SetActive(true);
         end = false;
+        for (int i = 0; i < SoundManager.instance.mic.Length; i++)
+        {
+            SoundManager.instance.mic[i].mute = true;
+        }
+        SoundManager.instance.mic[8].mute = false;
+        SoundManager.instance.mic[8].Play();
     }
 
     // Update is called once per frame
