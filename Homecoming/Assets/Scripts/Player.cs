@@ -28,6 +28,7 @@ public class Player : MonoBehaviour
     private float currentAlpha;
     public NPC currentNPC;
     public bool talking;
+    Quaternion last_q= Quaternion.Euler(0, 180, 0); 
     // Start is called before the first frame update
     void Start()
     {
@@ -51,25 +52,38 @@ public class Player : MonoBehaviour
             if (moveable)
             {
                 float horizon = Input.GetAxis("Horizontal");
-                transform.Translate(Vector3.right * horizon * moveSpeed * Time.deltaTime);
-               //Debug.Log(horizon);
+                
+               
+                //Debug.Log(horizon);
 
                 if (horizon > 0.5f)
                 {
                     animator.Play("playerRight");
+                    transform.rotation = Quaternion.Euler(0, 180, 0);
+                    transform.Translate(Vector3.left * horizon * moveSpeed * Time.deltaTime);
+                    
+                    last_q = transform.rotation;
                     //Debug.Log("应该播放向右动画");
                 }
-                else if(horizon<-0.5f)
+                else if (horizon < -0.5f)
                 {
                     animator.Play("playerLeft");
+                    transform.rotation = Quaternion.Euler(0, 0, 0);
+                    transform.Translate(Vector3.right * horizon * moveSpeed * Time.deltaTime);
+                   
+                    last_q = transform.rotation;
+
                     //Debug.Log("应该播放向左动画");
                 }
                 else
                 {
                     animator.Play("PlayerIdle");
+                    transform.rotation = last_q;
                     //Debug.Log("应该播放待机动画");
 
-                } 
+                }
+
+               
             }
             if (Input.GetKeyDown(KeyCode.E) && talkable)
             {
@@ -80,10 +94,10 @@ public class Player : MonoBehaviour
         //检测开成场动画是否播放完成
         if (animator.GetCurrentAnimatorStateInfo(0).normalizedTime>=1.0f)
         {
-            //开场动画播放完毕 可以控制角色
-            isStartGameAni = false;
-            //开场动画播放完毕 激活左侧墙壁
-            leftWall.SetActive(true);
+            ////开场动画播放完毕 可以控制角色
+            //isStartGameAni = false;
+            ////开场动画播放完毕 激活左侧墙壁
+            //leftWall.SetActive(true);
         }
         //Debug.Log(isStartGameAni + "   " + moveable + "   " + talkable);
         if (Input.GetKeyDown(KeyCode.T))
@@ -140,8 +154,17 @@ public class Player : MonoBehaviour
     public void PlayNewGame()
     {
         animator.Play("playerAni");
+        transform.rotation = Quaternion.Euler(0, 180, 0);
         //isStartGameAni = false;
-       
+        transform.Translate(Vector3.left * 5);
+        Invoke("InvokePlayGame", 1f);
+    }
+    public void InvokePlayGame()
+    {
+        //开场动画播放完毕 可以控制角色
+        isStartGameAni = false;
+        //开场动画播放完毕 激活左侧墙壁
+        leftWall.SetActive(true);
     }
 
     public void BeginThink(string str)

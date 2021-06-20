@@ -1,21 +1,18 @@
 ﻿<Properties StartupConfiguration="{FD6F1703-4335-53EF-A8FD-BCE409E8985C}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/SoundManager.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/Player.cs">
     <Files>
       <File FileName="Assets/Scripts/Message.cs" Line="10" Column="31" />
-      <File FileName="Assets/Scripts/Player.cs" Line="42" Column="72" />
-      <File FileName="Assets/Scripts/PostManager.cs" Line="50" Column="44" />
-      <File FileName="Assets/Scripts/StartGame.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/TalkManager.cs" Line="1" Column="1" />
-      <File FileName="Assets/Bgroll.cs" Line="11" Column="46" />
-      <File FileName="Assets/SoundManager.cs" Line="7" Column="38" />
+      <File FileName="Assets/Scripts/Player.cs" Line="31" Column="53" />
+      <File FileName="Assets/Scripts/PostManager.cs" />
+      <File FileName="Assets/Scripts/StartGame.cs" />
+      <File FileName="Assets/Scripts/TalkManager.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
         <State name="__root__">
           <Node name="Homecoming" expanded="True">
-            <Node name="Assets" expanded="True">
+            <Node name="Assets" expanded="True" selected="True">
               <Node name="Scripts" expanded="True" />
-              <Node name="SoundManager.cs" selected="True" />
             </Node>
           </Node>
         </State>
@@ -24,7 +21,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="94481621-cbc1-49a8-b340-058efe960727" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1e25a2f1-de70-4d3e-8869-0e12c7161049" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
