@@ -29,6 +29,7 @@ public class TalkManager : MonoBehaviour
         ChatBox.text = "";
         InputDown.readOnly = false;
         sentable = true;
+        SoundManager.instance.ChangeVolume(0.4f);
     }
     // Update is called once per frame
     void Update()
@@ -70,5 +71,9 @@ public class TalkManager : MonoBehaviour
         InputDown.readOnly = true;
         sentable = false;
         PostManager.instance.SendPost(currentNPCnumber, InputDown.text);
+    }
+    private void OnDisable()
+    {
+        SoundManager.instance.ChangeVolume(0.8f);
     }
 }

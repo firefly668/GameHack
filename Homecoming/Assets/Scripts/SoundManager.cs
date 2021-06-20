@@ -16,13 +16,13 @@ public class SoundManager : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        InvokeRepeating("RondomDialogue", 10, 10);
+        //InvokeRepeating("RondomDialogue", 10, 10);
     }
 
     // Update is called once per frame
     void Update()
     {
-        RondomDialogue();
+        //RondomDialogue();
     }
     public void RondomDialogue()
     {
@@ -30,12 +30,16 @@ public class SoundManager : MonoBehaviour
         Debug.Log(i);
         if (i==1)
         {
-            mic[3].Play();
+            mic[4].Play();
         }
         else
         {
             mic[4].Play();
         }
 
+    }
+    public void ChangeVolume(float f)
+    {
+        mic[4].volume = f;
     }
 }
