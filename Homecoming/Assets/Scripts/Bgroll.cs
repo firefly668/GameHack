@@ -9,7 +9,10 @@ public class Bgroll : MonoBehaviour
     public End end;
     private void Start()
     {
-        startPos = new Vector3(-47, -1.4f, 0);
+        
+            startPos = new Vector3(-47, -1.4f, 0);
+        
+        
     }
     void Update()
     {

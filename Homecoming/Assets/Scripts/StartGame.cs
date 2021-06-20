@@ -18,6 +18,7 @@ public class StartGame : MonoBehaviour
     public void ClickStartGame()
     {
         SceneManager.LoadScene("postTest");
+        GameObject.Find("StartButton").GetComponent<AudioSource>().Play();
     }
 
 }
