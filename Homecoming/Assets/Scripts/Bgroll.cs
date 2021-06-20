@@ -9,13 +9,13 @@ public class Bgroll : MonoBehaviour
     public End end;
     private void Start()
     {
-        startPos = new Vector3(-85, -0.8f, 0);
+        startPos = new Vector3(-47, -1.4f, 0);
     }
     void Update()
     {
         transform.Translate(Vector3.right * Time.deltaTime * moveSpeed);
         //Debug.Log(transform.position);
-        if(transform.position.x > 35)
+        if(transform.position.x > 25)
         {
             transform.position = startPos;
         }
