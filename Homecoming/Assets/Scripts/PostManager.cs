@@ -5,6 +5,9 @@ using System.Text;
 using UnityEngine;
 using UnityEngine.Networking;
 using LitJson;
+using System;
+using Random = UnityEngine.Random;
+
 public class PostManager : MonoBehaviour
 {
     public static PostManager instance = null;
@@ -12,12 +15,15 @@ public class PostManager : MonoBehaviour
     int Number;
     public string[] connect;
     public string response;
+    public GameObject[] NPCs;
+    public int questioncount;
     private void Awake()
     {
         if (instance == null)
             instance = this;
         else if (instance != this)
             Destroy(gameObject);
+        questioncount = 0;
     }
     IEnumerator Post()
     {
@@ -47,13 +53,22 @@ public class PostManager : MonoBehaviour
                 Debug.Log(temp);
                 //connect[Number] = test.downloadHandler.text;
                 Debug.Log(temp.Length);
-                string tempresponse = Regex.Match(temp, "response:.*?。|\\? ").Value;
+                string tempresponse = "response:" + temp.Split(new string[] {"response:","input:" }, StringSplitOptions.RemoveEmptyEntries)[1];
                 if (tempresponse.Length == 0)
                     continue;
                 connect[Number] += tempresponse;
                 //connect[Number] = connect[Number].Substring(13, connect.Length-16);
                 response = "";
-                response += Regex.Match(tempresponse, ":.*?。|\\?");
+                response += tempresponse.Split(new string[] { ":" }, StringSplitOptions.RemoveEmptyEntries)[1];
+                if ((Random.Range(0, 10) >= 2 && questioncount >= 4) || Random.Range(0,10)>=8)
+                {
+                    questioncount = 0;
+                    string[] questions = NPCs[Number].GetComponent<NPC>().questions;
+                    int tempNum = Random.Range(0, questions.Length);
+                    connect[Number] += questions[tempNum];
+                    response += questions[tempNum];
+                }
+                questioncount++;
                 Debug.Log(response);
                 TalkManager.instance.Change(true,response);
             }
@@ -62,7 +77,11 @@ public class PostManager : MonoBehaviour
 
     public string SendPost(int number,string str="爱吃肉")
     {
-        Number = number;
+        if (Number != number)
+        {
+            questioncount = 0;
+            Number = number;
+        }
         connect[Number] += "input:" + str;
         StartCoroutine(Post());
         return response;

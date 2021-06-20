@@ -25,6 +25,7 @@ public class NPC : MonoBehaviour
     public float bubbletime;
     public bool talked;
     public string endTalk;
+    public float bubbleoffset;
     // Start is called before the first frame update
     void Start()
     {
@@ -32,6 +33,8 @@ public class NPC : MonoBehaviour
         animator = GetComponent<Animator>();
         bubbletick = 0;
         talked = false;
+        bubbleoffset = Random.Range(0, bubbletime / 2);
+        bubbletick = bubbleoffset;
     }
 
     // Update is called once per frame
@@ -43,7 +46,7 @@ public class NPC : MonoBehaviour
                 bubbletick += Time.deltaTime;
             if (bubbletick > bubbletime)
             {
-                bubbletick = 0;
+                bubbletick = bubbleoffset;
                 if (talked)
                     BeginThink(Bubblestr[1]);
                 else
