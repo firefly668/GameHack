@@ -48,7 +48,7 @@ public class End : MonoBehaviour
         }
         if (end && Input.anyKey)
         {
-            SceneManager.LoadScene("postTest");
+            SceneManager.LoadScene("StartScence");
         }
     }
 }
