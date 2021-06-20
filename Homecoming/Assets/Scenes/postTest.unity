@@ -3794,7 +3794,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 478754121}
   bgroll: {fileID: 392680705}
-  gametime: 30
+  gametime: 180
   currenttime: 0
   endbegin: 0
 --- !u!114 &1276239133
