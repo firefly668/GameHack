@@ -13,62 +13,82 @@ public class NPC : MonoBehaviour
     private float targetAlpha;
     private float currentAlpha;
     private float tick;
+    //气泡持续时间计时
     private bool ticking;
+
+    public string originstr;
+    public string[] Bubblestr;
+    public string[] questions;
+    public int Number;
+    public float bubbletick;
+    //气泡等待出现时间
+    public float bubbletime;
+    public bool talked;
+    public string endTalk;
     // Start is called before the first frame update
     void Start()
     {
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<Player>();
         animator = GetComponent<Animator>();
+        bubbletick = 0;
+        talked = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.T))
+        if (!player.talking)
         {
-            BeginThink("111");
-        }
-
-        if (targetAlpha != currentAlpha)
-        {
-            Debug.Log(currentAlpha);
-            thinkBubble.gameObject.SetActive(true);
-            if (Mathf.Abs(targetAlpha - currentAlpha) > 0.1)
-                currentAlpha += (targetAlpha - currentAlpha) * Time.deltaTime * 2;
-            else currentAlpha = targetAlpha;
-
-            thinkBubble.color = new Color(255, 255, 255, currentAlpha);
-        }
-        else
-        {
-            if (currentAlpha == 0)
+            if (!ticking)
+                bubbletick += Time.deltaTime;
+            if (bubbletick > bubbletime)
             {
-                if (thinkBubble.IsActive())
-                    thinkBubble.gameObject.SetActive(false);
+                bubbletick = 0;
+                if (talked)
+                    BeginThink(Bubblestr[1]);
+                else
+                    BeginThink(Bubblestr[0]);
+            }
+            if (targetAlpha != currentAlpha)
+            {
+                //Debug.Log(currentAlpha);
+                thinkBubble.gameObject.SetActive(true);
+                if (Mathf.Abs(targetAlpha - currentAlpha) > 0.1)
+                    currentAlpha += (targetAlpha - currentAlpha) * Time.deltaTime * 2;
+                else currentAlpha = targetAlpha;
+                thinkBubble.color = new Color(255, 255, 255, currentAlpha);
             }
             else
             {
-                if (!thinkText.IsActive())
+                if (currentAlpha == 0)
                 {
-                    thinkText.gameObject.SetActive(true);
-                    thinkText.DOText(thinkstr, 0.8f, false);
-                    tick = 0;
+                    if (thinkBubble.IsActive())
+                        thinkBubble.gameObject.SetActive(false);
                 }
                 else
                 {
-                    if (ticking)
+                    if (!thinkText.IsActive())
                     {
-                        tick += Time.deltaTime;
-                        if (tick > 4.0f)
-                        {
-                            ticking = false;
-                            EndThink();
-                        }
+                        thinkText.gameObject.SetActive(true);
+                        thinkText.DOText(thinkstr, 0.8f, false);
+                        tick = 0;
                     }
                     else
                     {
-                        ticking = true;
-                        tick = 0;
+                        if (ticking)
+                        {
+                            tick += Time.deltaTime;
+                            if (tick > 4.0f)
+                            {
+                                ticking = false;
+                                EndThink();
+                            }
+                        }
+                        else
+                        {
+                            ticking = true;
+                            tick = 0;
+                        }
                     }
                 }
             }
@@ -84,8 +104,9 @@ public class NPC : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
-        if(collision.gameObject.tag == "Player")
+        if (collision.gameObject.tag == "Player")
         {
+            player.currentNPC = this;
             player.talkable = true;
         }
     }
@@ -108,5 +129,9 @@ public class NPC : MonoBehaviour
     {
         thinkText.gameObject.SetActive(false);
         targetAlpha = 0;
+    }
+    public void EndGameTalk()
+    {
+        TalkManager.instance.Change(false,endTalk);
     }
 }

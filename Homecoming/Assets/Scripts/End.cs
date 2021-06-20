@@ -2,40 +2,47 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 using DG.Tweening;
 public class End : MonoBehaviour
 {
     public Image panel;
     public Text summary;
-    public float currentAlpha;
+    public float currentPanelAlpha;
+    public float currentSumAlpha;
     public string summarystr;
     public bool end;
     private void OnEnable()
     {
-        currentAlpha = 0;
-        panel.color = new Color(255, 255, 255, 0);
-        summary.text = "";
-        summary.gameObject.SetActive(false);
+        currentPanelAlpha = 0;
+        currentSumAlpha = 0;
+        panel.color = new Color(0, 0, 0, 0);
+        summary.color = new Color(255, 255, 255, 0);
+        summary.gameObject.SetActive(true);
         end = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Mathf.Abs(1 - currentAlpha) > 0.1)
-            currentAlpha += (1 - currentAlpha) * Time.deltaTime;
-        else currentAlpha = 1;
-        if(currentAlpha == 1)
+        if (Mathf.Abs(1 - currentPanelAlpha) > 0.1)
+            currentPanelAlpha += (1 - currentPanelAlpha) * Time.deltaTime / 2;
+        else currentPanelAlpha = 1;
+        panel.color = new Color(0, 0, 0, currentPanelAlpha);
+        if(currentPanelAlpha == 1)
         {
-            summary.gameObject.SetActive(true);
-            summary.DOText(summarystr, 1.5f).OnComplete(() => 
+            if (Mathf.Abs(1 - currentSumAlpha) > 0.1)
+                currentSumAlpha += (1 - currentSumAlpha) * Time.deltaTime;
+            else currentSumAlpha = 1;
+            summary.color = new Color(255, 255, 255, currentSumAlpha);
+            if(currentSumAlpha == 1)
             {
                 end = true;
-            });
+            }
         }
         if (end && Input.anyKey)
         {
-            //TODO:按键回到主菜单
+            SceneManager.LoadScene("postTest");
         }
     }
 }

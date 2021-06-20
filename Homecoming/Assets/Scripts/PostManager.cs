@@ -41,7 +41,7 @@ public class PostManager : MonoBehaviour
             yield return test.SendWebRequest();
             if (test.error != null)
                 Debug.Log(test.error);
-            else
+            else if(!GameManager.instance.endbegin)
             {
                 string temp = test.downloadHandler.text;
                 Debug.Log(temp);
@@ -55,7 +55,7 @@ public class PostManager : MonoBehaviour
                 response = "";
                 response += Regex.Match(tempresponse, ":.*?。|\\?");
                 Debug.Log(response);
-                TalkManager.instance.Change(response);
+                TalkManager.instance.Change(true,response);
             }
         }
     }

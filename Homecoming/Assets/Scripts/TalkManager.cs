@@ -15,6 +15,7 @@ public class TalkManager : MonoBehaviour
     public int currentNPCnumber;
     public int UpPos;
     public int DownPos;
+    public Bgroll bgroll;
     private void Awake()
     {
         if (instance == null)
@@ -37,18 +38,30 @@ public class TalkManager : MonoBehaviour
             TalkSend();
         }
     }
-    public void Change(string response)
+    public void Change(bool flag ,string response)
     {
         ChatBox.transform.position = InputDown.transform.position;
-        ChatBox.text = InputDown.text;
-        InputDown.text = "";
+        if (flag)
+        {
+            ChatBox.text = InputDown.text + "\n";
+            InputDown.text = "";
+        }
+        else
+        {
+            ChatBox.text = "";
+        }
         //此时InputUp.readOnly应该是true
         ChatBox.gameObject.transform.DOLocalMoveY(UpPos, 1.5f, false).OnComplete(() =>
         {
-            ChatBox.DOText(ChatBox.text + "\n" + response,0.8f);
-            //已经交换过了，此时的InputDown就是用户接下来要输入的inputfield，将其设置为可输入
-            InputDown.readOnly = false;
-            sentable = true;
+            ChatBox.DOText(ChatBox.text + response,0.8f).OnComplete(() =>
+            {
+                InputDown.readOnly = false;
+                sentable = true;
+                if (!flag)
+                {
+                    bgroll.EndGame();
+                }
+            });
         });
     }
 

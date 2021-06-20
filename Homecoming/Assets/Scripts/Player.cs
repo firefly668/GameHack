@@ -26,6 +26,8 @@ public class Player : MonoBehaviour
     public string thinkstr;
     private float targetAlpha;
     private float currentAlpha;
+    public NPC currentNPC;
+    public bool talking;
     // Start is called before the first frame update
     void Start()
     {
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
         targetAlpha = 0;
         currentAlpha = 0;
         thinkBubble.color = new Color(255, 255, 255, 0);
+        talking = false;
     }
 
     // Update is called once per frame
@@ -66,8 +69,7 @@ public class Player : MonoBehaviour
                     animator.Play("PlayerIdle");
                     //Debug.Log("应该播放待机动画");
 
-                }
-            
+                } 
             }
             if (Input.GetKeyDown(KeyCode.E) && talkable)
             {
@@ -88,14 +90,13 @@ public class Player : MonoBehaviour
         {
             BeginThink("111");
         }
-        if (Input.GetKeyDown(KeyCode.Q))
+        if (Input.GetKeyDown(KeyCode.Q) && currentAlpha == 1)
         {
             EndThink();
         }
         if (targetAlpha != currentAlpha)
         {
-            Debug.Log(currentAlpha);
-            thinkBubble.gameObject.SetActive(true);
+            //Debug.Log(currentAlpha);
             if (Mathf.Abs(targetAlpha - currentAlpha) > 0.1)
                 currentAlpha += (targetAlpha - currentAlpha) * Time.deltaTime * 2;
             else currentAlpha = targetAlpha;
@@ -124,6 +125,9 @@ public class Player : MonoBehaviour
         talkable = false;
         moveable = false;
         Talk.SetActive(true);
+        TalkManager.instance.currentNPCnumber = currentNPC.Number;
+        currentNPC.talked = true;
+        talking = true;
     }
 
     public void EndTalk()
@@ -131,6 +135,7 @@ public class Player : MonoBehaviour
         talkable = true;
         moveable = true;
         Talk.SetActive(false);
+        talking = false;
     }
     public void PlayNewGame()
     {
@@ -144,6 +149,7 @@ public class Player : MonoBehaviour
         thinkstr = str;
         targetAlpha = 1;
         thinkText.text = "";
+        thinkBubble.gameObject.SetActive(true);
     }
 
     public void EndThink()
